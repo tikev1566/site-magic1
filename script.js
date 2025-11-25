@@ -41,12 +41,12 @@ function toggleModal(show) {
 
 async function handleAuth(event, mode) {
   event.preventDefault();
-  const email = form?.email?.value.trim();
+  const username = form?.username?.value.trim();
   const password = form?.password?.value.trim();
 
-  if (!email || !password || !formMessage) {
+  if (!username || !password || !formMessage) {
     if (formMessage) {
-      formMessage.textContent = 'Merci de renseigner une adresse e-mail et un mot de passe.';
+      formMessage.textContent = "Merci de renseigner un nom d'utilisateur et un mot de passe.";
       formMessage.style.color = '#f5ad42';
     }
     return;
@@ -56,16 +56,22 @@ async function handleAuth(event, mode) {
   formMessage.style.color = '#18d3a6';
 
   try {
+    const body = new URLSearchParams({ action: mode, username, password });
+
     const response = await fetch('auth.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: mode, email, password }),
+      body,
     });
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      throw new Error('Réponse inattendue du serveur. Vérifiez que PHP est bien activé.');
+    }
 
-    if (!data.ok) {
-      throw new Error(data.message || 'Une erreur est survenue.');
+    if (!response.ok || !data.ok) {
+      throw new Error(data?.message || `Erreur ${response.status || ''}`.trim());
     }
 
     formMessage.textContent = data.message;

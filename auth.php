@@ -3,12 +3,21 @@
  * Simple authentication endpoint for InfinityFree MySQL hosting.
  *
  * Exposes two actions:
- *  - signup: creates a user with email + hashed password
+ *  - signup: creates a user with username + hashed password
  *  - signin: verifies credentials and returns a welcome message
  */
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Répondre positivement aux pré-vols CORS (OPTIONS) déclenchés
+// par les requêtes fetch JSON depuis InfinityFree ou d'autres hôtes.
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -25,12 +34,12 @@ $port = getenv('DB_PORT') ?: '3306';
 
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 $action = $input['action'] ?? 'signup';
-$email = trim($input['email'] ?? '');
+$username = trim($input['username'] ?? '');
 $plainPassword = $input['password'] ?? '';
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if ($username === '' || strlen($username) < 3) {
     http_response_code(422);
-    echo json_encode(['ok' => false, 'message' => 'Adresse e-mail invalide.']);
+    echo json_encode(['ok' => false, 'message' => "Le nom d'utilisateur doit contenir au moins 3 caractères."]); 
     exit;
 }
 
@@ -50,32 +59,32 @@ try {
     // Ensure the users table exists (Idempotent for first deploys)
     $pdo->exec('CREATE TABLE IF NOT EXISTS users (
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        email VARCHAR(190) NOT NULL UNIQUE,
+        username VARCHAR(100) NOT NULL UNIQUE,
         password_hash VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
 
     if ($action === 'signup') {
-        $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ? LIMIT 1');
-        $stmt->execute([$email]);
+        $stmt = $pdo->prepare('SELECT id FROM users WHERE username = ? LIMIT 1');
+        $stmt->execute([$username]);
 
         if ($stmt->fetch()) {
             http_response_code(409);
-            echo json_encode(['ok' => false, 'message' => 'Un compte existe déjà avec cet e-mail.']);
+            echo json_encode(['ok' => false, 'message' => "Un compte existe déjà avec ce nom d'utilisateur."]); 
             exit;
         }
 
         $hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT);
-        $insert = $pdo->prepare('INSERT INTO users (email, password_hash) VALUES (?, ?)');
-        $insert->execute([$email, $hashedPassword]);
+        $insert = $pdo->prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)');
+        $insert->execute([$username, $hashedPassword]);
 
         echo json_encode(['ok' => true, 'message' => 'Compte créé avec succès.']);
         exit;
     }
 
     if ($action === 'signin') {
-        $stmt = $pdo->prepare('SELECT id, password_hash FROM users WHERE email = ? LIMIT 1');
-        $stmt->execute([$email]);
+        $stmt = $pdo->prepare('SELECT id, password_hash FROM users WHERE username = ? LIMIT 1');
+        $stmt->execute([$username]);
         $userRow = $stmt->fetch();
 
         if (!$userRow || !password_verify($plainPassword, $userRow['password_hash'])) {

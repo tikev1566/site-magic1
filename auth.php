@@ -25,22 +25,38 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Database credentials (use environment variables in InfinityFree panel when possible)
-// Values below are pre-filled with the InfinityFree instance provided in the brief
-// (db: epiz_40386105_magic25 on sql301.infinityfree.com).
-$host = getenv('DB_HOST')
-    ?: getenv('MYSQLHOST')
-    ?: 'sql301.infinityfree.com';
-$dbName = getenv('DB_NAME')
-    ?: getenv('MYSQLDB')
-    ?: 'epiz_40386105_magic25';
-$user = getenv('DB_USER')
-    ?: getenv('MYSQLUSER')
-    ?: 'epiz_40386105';
-$password = getenv('DB_PASS')
-    ?: getenv('MYSQLPASSWORD')
-    ?: 'QegUqVZMfbxYGwq';
+// Database credentials
+// InfinityFree expose les variables suivantes dans le panneau :
+//  - MYSQL_HOST
+//  - MYSQL_DB
+//  - MYSQL_USER
+//  - MYSQL_PASSWORD
+// Des alias sans underscore et DB_* sont également acceptés pour faciliter
+// le déploiement sur d'autres hébergeurs.
+$host = getenv('MYSQL_HOST')
+    ?: getenv('DB_HOST')
+    ?: getenv('MYSQLHOST');
+$dbName = getenv('MYSQL_DB')
+    ?: getenv('DB_NAME')
+    ?: getenv('MYSQLDB');
+$user = getenv('MYSQL_USER')
+    ?: getenv('DB_USER')
+    ?: getenv('MYSQLUSER');
+$password = getenv('MYSQL_PASSWORD')
+    ?: getenv('DB_PASS')
+    ?: getenv('MYSQLPASSWORD');
 $port = getenv('DB_PORT') ?: '3306';
+
+// Refuser de continuer si les identifiants sont manquants pour éviter des
+// erreurs de connexion (SQLSTATE[HY000] [1045]) et informer clairement l'utilisateur.
+if (!$host || !$dbName || !$user) {
+    http_response_code(500);
+    echo json_encode([
+        'ok' => false,
+        'message' => "Configuration de base de données manquante. Renseignez MYSQL_HOST, MYSQL_DB, MYSQL_USER et MYSQL_PASSWORD.",
+    ]);
+    exit;
+}
 
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 $action = $input['action'] ?? 'signup';

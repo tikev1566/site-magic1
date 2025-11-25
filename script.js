@@ -23,7 +23,7 @@ function toggleModal(show) {
   }
 }
 
-function handleAuth(event, mode) {
+async function handleAuth(event, mode) {
   event.preventDefault();
   const email = form.email.value.trim();
   const password = form.password.value.trim();
@@ -34,11 +34,29 @@ function handleAuth(event, mode) {
     return;
   }
 
-  formMessage.textContent = mode === 'signup'
-    ? 'Compte créé ! Vous êtes prêt pour la saison.'
-    : 'Connexion réussie. Chargement de votre profil…';
+  formMessage.textContent = 'Connexion au serveur…';
   formMessage.style.color = '#18d3a6';
-  setTimeout(() => toggleModal(false), 1200);
+
+  try {
+    const response = await fetch('auth.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: mode, email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error(data.message || 'Une erreur est survenue.');
+    }
+
+    formMessage.textContent = data.message;
+    formMessage.style.color = '#18d3a6';
+    setTimeout(() => toggleModal(false), 1200);
+  } catch (error) {
+    formMessage.textContent = error.message;
+    formMessage.style.color = '#f2695c';
+  }
 }
 
 function initModal() {

@@ -13,7 +13,7 @@ Ouvrez simplement `index.html` dans votre navigateur pour prévisualiser la page
 
 ## Connexion PHP + MySQL (InfinityFree)
 
-Le formulaire d'authentification envoie désormais les données vers un endpoint PHP (`api/register.php`) qui insère ou met à jour l'utilisateur dans MySQL.
+Le formulaire d'authentification envoie désormais les données vers un endpoint PHP (`api/register.php`) qui insère ou met à jour l'utilisateur dans MySQL. Si GitHub affiche des caractères étranges, forcez l'encodage UTF-8 ou consultez le fichier directement dans votre éditeur.
 
 1. Renseignez vos identifiants dans `config.php` (ou via les variables d'environnement `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_PORT`).
 2. Créez la table `users` sur votre base InfinityFree :

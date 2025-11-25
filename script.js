@@ -23,6 +23,31 @@ function toggleModal(show) {
   }
 }
 
+async function syncWithBackend(email, password, mode) {
+  formMessage.textContent = "Synchronisation en cours avec la base MySQL…";
+  formMessage.style.color = '#f5ad42';
+
+  try {
+    const response = await fetch('api/register.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, mode }),
+    });
+
+    const result = await response.json();
+    if (!response.ok || result.status !== 'ok') {
+      throw new Error(result.message || 'Une erreur est survenue.');
+    }
+
+    formMessage.textContent = result.message;
+    formMessage.style.color = '#18d3a6';
+    setTimeout(() => toggleModal(false), 1200);
+  } catch (error) {
+    formMessage.textContent = error.message;
+    formMessage.style.color = '#f76d6d';
+  }
+}
+
 function handleAuth(event, mode) {
   event.preventDefault();
   const email = form.email.value.trim();
@@ -34,11 +59,7 @@ function handleAuth(event, mode) {
     return;
   }
 
-  formMessage.textContent = mode === 'signup'
-    ? 'Compte créé ! Vous êtes prêt pour la saison.'
-    : 'Connexion réussie. Chargement de votre profil…';
-  formMessage.style.color = '#18d3a6';
-  setTimeout(() => toggleModal(false), 1200);
+  syncWithBackend(email, password, mode);
 }
 
 function initModal() {

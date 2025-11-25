@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration - Magic Arena</title>
+  <link rel="preconnect" href="http://fonts.googleapis.com">
+  <link rel="preconnect" href="http://fonts.gstatic.com" crossorigin>
+  <link href="http://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Magic Arena</div>
+    <nav class="topbar__nav" aria-label="Navigation principale">
+      <a href="index.html" class="topbar__link">Accueil</a>
+      <a href="joueurs.html" class="topbar__link">Joueurs</a>
+      <a href="saison.html" class="topbar__link">Saison & Tournois</a>
+      <a href="match.html" class="topbar__link">Résultat du match</a>
+      <a href="admin.html" class="topbar__link is-active">Administration</a>
+    </nav>
+    <div class="pill">Accès restreint</div>
+  </header>
+
+  <main class="page" style="padding: 32px min(6vw, 64px) 64px;">
+    <section class="card admin-card">
+      <div class="section__header" style="align-items: flex-start;">
+        <div>
+          <p class="eyebrow">Modifications rapides</p>
+          <h1>Mettre à jour la page d'accueil</h1>
+          <p class="subhead">Protégez l'accès par mot de passe puis personnalisez le héros et la carte de progression.</p>
+        </div>
+        <p class="pill pill--glow">Changements locaux</p>
+      </div>
+
+      <div id="admin-gate" class="admin-gate">
+        <p class="lead">Saisissez le mot de passe pour déverrouiller la zone d'édition.</p>
+        <form id="admin-access" class="form" style="max-width: 480px;">
+          <label class="form__field">
+            <span>Mot de passe</span>
+            <input type="password" id="admin-password" name="password" required minlength="6" placeholder="••••••••" />
+          </label>
+          <div class="form__actions">
+            <button type="submit" class="btn btn--primary">Déverrouiller</button>
+          </div>
+          <p id="admin-access-message" class="form__message" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div id="admin-panel" class="admin-panel hidden">
+        <form id="admin-form" class="form admin-form">
+          <div class="form__grid">
+            <label class="form__field">
+              <span>Titre principal</span>
+              <input type="text" name="heroTitle" required />
+            </label>
+            <label class="form__field">
+              <span>Sous-titre (introduction)</span>
+              <textarea name="heroLead" rows="3" required></textarea>
+            </label>
+            <label class="form__field">
+              <span>Bandeau (prochaine étape)</span>
+              <input type="text" name="heroPill" required />
+            </label>
+            <label class="form__field">
+              <span>Progression (%)</span>
+              <input type="number" name="heroProgress" min="0" max="100" step="1" required />
+            </label>
+            <label class="form__field">
+              <span>Texte de progression</span>
+              <input type="text" name="heroProgressMetric" required />
+            </label>
+            <label class="form__field">
+              <span>Détail 1</span>
+              <input type="text" name="heroDetailOne" required />
+            </label>
+            <label class="form__field">
+              <span>Détail 2</span>
+              <input type="text" name="heroDetailTwo" required />
+            </label>
+            <label class="form__field">
+              <span>Détail 3</span>
+              <input type="text" name="heroDetailThree" required />
+            </label>
+          </div>
+          <div class="form__actions">
+            <button type="submit" class="btn btn--primary">Enregistrer</button>
+            <button type="button" id="reset-content" class="btn btn--ghost">Revenir aux valeurs par défaut</button>
+          </div>
+          <p id="admin-message" class="form__message" aria-live="polite"></p>
+        </form>
+        <p class="muted">Les modifications sont enregistrées dans votre navigateur (localStorage). Rechargez la page d'accueil pour voir le résultat.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -6,12 +6,14 @@ const ctaButtons = [
   document.getElementById('cta-secondary'),
   document.getElementById('cta-login'),
   document.getElementById('footer-login'),
+  document.getElementById('nav-login'),
 ];
 const form = document.getElementById('auth-form');
 const signInButton = document.getElementById('sign-in');
 const formMessage = document.getElementById('form-message');
 
 function toggleModal(show) {
+  if (!authModal || !backdrop) return;
   if (show) {
     authModal.classList.remove('hidden');
     backdrop.classList.remove('hidden');
@@ -25,12 +27,14 @@ function toggleModal(show) {
 
 async function handleAuth(event, mode) {
   event.preventDefault();
-  const email = form.email.value.trim();
-  const password = form.password.value.trim();
+  const email = form?.email?.value.trim();
+  const password = form?.password?.value.trim();
 
-  if (!email || !password) {
-    formMessage.textContent = 'Merci de renseigner une adresse e-mail et un mot de passe.';
-    formMessage.style.color = '#f5ad42';
+  if (!email || !password || !formMessage) {
+    if (formMessage) {
+      formMessage.textContent = 'Merci de renseigner une adresse e-mail et un mot de passe.';
+      formMessage.style.color = '#f5ad42';
+    }
     return;
   }
 
@@ -60,14 +64,55 @@ async function handleAuth(event, mode) {
 }
 
 function initModal() {
-  toggleModal(true);
+  if (!authModal || !backdrop || !form || !closeModalBtn) return;
 
   closeModalBtn.addEventListener('click', () => toggleModal(false));
   backdrop.addEventListener('click', () => toggleModal(false));
   ctaButtons.filter(Boolean).forEach((btn) => btn.addEventListener('click', () => toggleModal(true)));
 
   form.addEventListener('submit', (event) => handleAuth(event, 'signup'));
-  signInButton.addEventListener('click', (event) => handleAuth(event, 'signin'));
+  signInButton?.addEventListener('click', (event) => handleAuth(event, 'signin'));
 }
 
-document.addEventListener('DOMContentLoaded', initModal);
+function initMatchForm() {
+  const matchForm = document.getElementById('match-form');
+  const matchMessage = document.getElementById('match-message');
+
+  if (!matchForm) return;
+
+  matchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const playerOne = matchForm.playerOne.value;
+    const playerTwo = matchForm.playerTwo.value;
+    const score = matchForm.score.value.trim();
+
+    if (!playerOne || !playerTwo || !score) {
+      if (matchMessage) {
+        matchMessage.textContent = 'Merci de sélectionner deux joueurs et de renseigner le score.';
+        matchMessage.style.color = '#f5ad42';
+      }
+      return;
+    }
+
+    if (playerOne === playerTwo) {
+      if (matchMessage) {
+        matchMessage.textContent = 'Choisissez deux joueurs différents.';
+        matchMessage.style.color = '#f2695c';
+      }
+      return;
+    }
+
+    if (matchMessage) {
+      matchMessage.textContent = `Résultat enregistré : ${playerOne} ${score} ${playerTwo}`;
+      matchMessage.style.color = '#18d3a6';
+    }
+    matchForm.reset();
+  });
+}
+
+function initPage() {
+  initModal();
+  initMatchForm();
+}
+
+document.addEventListener('DOMContentLoaded', initPage);

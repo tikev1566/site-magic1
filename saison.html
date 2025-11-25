@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saison & Tournois - Magic Arena</title>
+  <link rel="preconnect" href="http://fonts.googleapis.com">
+  <link rel="preconnect" href="http://fonts.gstatic.com" crossorigin>
+  <link href="http://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="backdrop" class="backdrop hidden"></div>
+  <div id="auth-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="modal__header">
+      <h2 id="auth-title">Rejoignez la saison Magic Arena</h2>
+      <button class="icon-button" id="close-modal" aria-label="Fermer la fenêtre">×</button>
+    </div>
+    <p class="modal__subtitle">Créez un compte ou connectez-vous pour suivre vos tournois, classements et récompenses.</p>
+    <form id="auth-form" class="form">
+      <label class="form__field">
+        <span>Adresse e-mail</span>
+        <input type="email" id="email" name="email" required placeholder="planeswalker@arena.gg">
+      </label>
+      <label class="form__field">
+        <span>Mot de passe</span>
+        <input type="password" id="password" name="password" required minlength="6" placeholder="••••••••">
+      </label>
+      <div class="form__actions">
+        <button type="submit" class="btn btn--primary">Créer un compte</button>
+        <button type="button" id="sign-in" class="btn btn--ghost">Se connecter</button>
+      </div>
+      <p id="form-message" class="form__message" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">Magic Arena</div>
+    <nav class="topbar__nav" aria-label="Navigation principale">
+      <a href="index.html" class="topbar__link">Accueil</a>
+      <a href="joueurs.html" class="topbar__link">Joueurs</a>
+      <a href="saison.html" class="topbar__link is-active">Saison & Tournois</a>
+      <a href="match.html" class="topbar__link">Résultat du match</a>
+    </nav>
+    <button class="btn btn--ghost" id="nav-login">Connexion</button>
+  </header>
+
+  <header class="hero hero--sub">
+    <div class="hero__glow"></div>
+    <div class="hero__content">
+      <p class="eyebrow">Saison 2025</p>
+      <h1>Saison et tournoi actuel</h1>
+      <p class="lead">Consultez l'état de la saison, les dates clés et l'événement en cours.</p>
+      <div class="hero__actions">
+        <a href="match.html" class="btn btn--primary">Reporter un résultat</a>
+        <a href="joueurs.html" class="btn btn--ghost">Voir le tableau des joueurs</a>
+      </div>
+      <div class="pill">
+        <span class="dot"></span>
+        <span>Événement en cours : Open Dominaria</span>
+      </div>
+    </div>
+    <div class="card hero__card">
+      <p class="card__title">Progression</p>
+      <div class="progress">
+        <div class="progress__bar" style="width: 42%"></div>
+      </div>
+      <p class="card__metric">10 tournois joués sur 24</p>
+      <ul class="card__list">
+        <li><span class="badge badge--emerald"></span>3 invitations Masters</li>
+        <li><span class="badge badge--amber"></span>Top 25 moyen</li>
+        <li><span class="badge badge--violet"></span>Dernière mise à jour : 3 juin</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="section">
+      <div class="section__header">
+        <div>
+          <p class="eyebrow">Tournoi actuel</p>
+          <h2>Open Dominaria</h2>
+          <p class="subhead">Format Classique • 8 rondes suisses • Top 8 le dimanche.</p>
+        </div>
+        <div class="cta__actions">
+          <a class="btn btn--ghost" href="match.html">Entrer un résultat</a>
+          <button class="btn btn--primary" id="cta-main">S'inscrire</button>
+        </div>
+      </div>
+      <div class="grid grid--tournament">
+        <div class="card">
+          <p class="card__title">Informations clés</p>
+          <p class="card__metric">14 juin • En ligne</p>
+          <ul class="card__list">
+            <li>Capacité : 1 500 joueurs</li>
+            <li>Récompenses : 2 500 gemmes + invitation</li>
+            <li>Arbitres : Niveau 2 certifiés</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="card__title">Pairings</p>
+          <p class="card__metric">Ronde 5 en cours</p>
+          <p>Les pairings sont publiés 2 minutes après la fin de chaque ronde.</p>
+          <p class="pill pill--glow">Salle virtuelle #Dominaria</p>
+        </div>
+        <div class="card">
+          <p class="card__title">Format et règles</p>
+          <p>Standard • Decklist 60 cartes minimum • Timer 50 minutes.</p>
+          <p>Veuillez respecter la politique de decklist ouverte et les procédures d'appel arbitre.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dim">
+      <div class="section__header">
+        <div>
+          <p class="eyebrow">Saison</p>
+          <h2>Prochains tournois</h2>
+          <p class="subhead">Planifiez vos déplacements et enregistrez vos rounds dès qu'ils sont joués.</p>
+        </div>
+      </div>
+      <div class="grid">
+        <article class="tournament">
+          <div class="tournament__meta">
+            <span class="pill pill--glow">Draft d'Ixalan</span>
+            <span class="tournament__date">29 juin · Boutique partenaire</span>
+          </div>
+          <h3>Draft Booster • 3 pods</h3>
+          <p>Une soirée immersive avec ambiance jungle, parfaite pour tenter un archétype dinos raffiné.</p>
+          <div class="tournament__footer">
+            <span class="chip">96 places</span>
+            <span class="chip">Display + carte promo</span>
+          </div>
+        </article>
+        <article class="tournament">
+          <div class="tournament__meta">
+            <span class="pill pill--glow">Masters Arcanes</span>
+            <span class="tournament__date">12 juillet · En ligne</span>
+          </div>
+          <h3>Explorer • Top 16 élimination</h3>
+          <p>Le rendez-vous majeur de mi-saison pour sécuriser une place vers le Championship.</p>
+          <div class="tournament__footer">
+            <span class="chip">512 joueurs</span>
+            <span class="chip">Ticket Championship</span>
+          </div>
+        </article>
+        <article class="tournament">
+          <div class="tournament__meta">
+            <span class="pill pill--glow">Finale de Saison</span>
+            <span class="tournament__date">27 juillet · Studio</span>
+          </div>
+          <h3>Standard • Plateau TV & casting</h3>
+          <p>Une finale sur scène avec decklists ouvertes, analyses pro et showmatchs thématiques.</p>
+          <div class="tournament__footer">
+            <span class="chip">Top 32</span>
+            <span class="chip">Bourse 25 000 €</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <p class="eyebrow">Magic Arena Saison 2025</p>
+      <p>Suivez la saison, confirmez vos rondes et préparez la finale en un coup d'œil.</p>
+    </div>
+    <div class="footer__links">
+      <a href="joueurs.html">Joueurs</a>
+      <a href="match.html">Résultat</a>
+      <a href="#" id="footer-login">Connexion</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

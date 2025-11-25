@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joueurs - Magic Arena Saison</title>
+  <link rel="preconnect" href="http://fonts.googleapis.com">
+  <link rel="preconnect" href="http://fonts.gstatic.com" crossorigin>
+  <link href="http://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="backdrop" class="backdrop hidden"></div>
+  <div id="auth-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="modal__header">
+      <h2 id="auth-title">Rejoignez la saison Magic Arena</h2>
+      <button class="icon-button" id="close-modal" aria-label="Fermer la fenêtre">×</button>
+    </div>
+    <p class="modal__subtitle">Créez un compte ou connectez-vous pour suivre vos tournois, classements et récompenses.</p>
+    <form id="auth-form" class="form">
+      <label class="form__field">
+        <span>Adresse e-mail</span>
+        <input type="email" id="email" name="email" required placeholder="planeswalker@arena.gg">
+      </label>
+      <label class="form__field">
+        <span>Mot de passe</span>
+        <input type="password" id="password" name="password" required minlength="6" placeholder="••••••••">
+      </label>
+      <div class="form__actions">
+        <button type="submit" class="btn btn--primary">Créer un compte</button>
+        <button type="button" id="sign-in" class="btn btn--ghost">Se connecter</button>
+      </div>
+      <p id="form-message" class="form__message" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">Magic Arena</div>
+    <nav class="topbar__nav" aria-label="Navigation principale">
+      <a href="index.html" class="topbar__link">Accueil</a>
+      <a href="joueurs.html" class="topbar__link is-active">Joueurs</a>
+      <a href="saison.html" class="topbar__link">Saison & Tournois</a>
+      <a href="match.html" class="topbar__link">Résultat du match</a>
+    </nav>
+    <button class="btn btn--ghost" id="nav-login">Connexion</button>
+  </header>
+
+  <header class="hero hero--sub">
+    <div class="hero__glow"></div>
+    <div class="hero__content">
+      <p class="eyebrow">Communauté</p>
+      <h1>Liste des joueurs</h1>
+      <p class="lead">Accédez aux profils, archétypes et performances des Arpenteurs inscrits sur la saison.</p>
+      <div class="hero__actions">
+        <a href="match.html" class="btn btn--primary">Enregistrer un match</a>
+        <a href="saison.html" class="btn btn--ghost">Voir les tournois</a>
+      </div>
+    </div>
+    <div class="card hero__card">
+      <p class="card__title">Joueurs actifs</p>
+      <p class="card__metric">128 compétiteurs</p>
+      <ul class="card__list">
+        <li><span class="badge badge--emerald"></span>Classement global à jour</li>
+        <li><span class="badge badge--amber"></span>Decklists vérifiées</li>
+        <li><span class="badge badge--violet"></span>Statistiques publiques</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="section">
+      <div class="section__header">
+        <div>
+          <p class="eyebrow">Joueurs</p>
+          <h2>Tableau de la ligue</h2>
+          <p class="subhead">Filtrez et parcourez les profils pour préparer vos appariements.</p>
+        </div>
+        <button class="btn btn--ghost" id="cta-login">Mettre à jour mon profil</button>
+      </div>
+
+      <div class="grid grid--players">
+        <article class="player-card">
+          <div class="player-card__header">
+            <img src="http://avatar.iran.liara.run/public/boy" alt="Portrait de NovaStrider" />
+            <div>
+              <h3>NovaStrider</h3>
+              <p>Guildmage Orzhov • Toulouse</p>
+            </div>
+          </div>
+          <div class="player-card__stats">
+            <span class="chip">248 pts</span>
+            <span class="chip">5 Top 8</span>
+            <span class="chip">Championship</span>
+          </div>
+          <p>Spécialiste contrôle/midrange, toujours prêt à grinder les Opens.</p>
+        </article>
+
+        <article class="player-card">
+          <div class="player-card__header">
+            <img src="http://avatar.iran.liara.run/public/girl" alt="Portrait de AriaFlux" />
+            <div>
+              <h3>AriaFlux</h3>
+              <p>Mono-Blue Tempo • Lille</p>
+            </div>
+          </div>
+          <div class="player-card__stats">
+            <span class="chip">231 pts</span>
+            <span class="chip">4 Top 8</span>
+            <span class="chip">Masters</span>
+          </div>
+          <p>Défenseuse du tempo bleu, connue pour ses lines précises et mulligans agressifs.</p>
+        </article>
+
+        <article class="player-card">
+          <div class="player-card__header">
+            <img src="http://avatar.iran.liara.run/public/female" alt="Portrait de BriseSort" />
+            <div>
+              <h3>BriseSort</h3>
+              <p>Azorius Contrôle • Lyon</p>
+            </div>
+          </div>
+          <div class="player-card__stats">
+            <span class="chip">208 pts</span>
+            <span class="chip">3 Top 8</span>
+            <span class="chip">En attente</span>
+          </div>
+          <p>Adore les mirrors, excelle dans le sideboard mapping et la gestion des menaces.</p>
+        </article>
+
+        <article class="player-card">
+          <div class="player-card__header">
+            <img src="http://avatar.iran.liara.run/public/male" alt="Portrait de MidnightLotus" />
+            <div>
+              <h3>MidnightLotus</h3>
+              <p>Rakdos Midrange • Paris</p>
+            </div>
+          </div>
+          <div class="player-card__stats">
+            <span class="chip">220 pts</span>
+            <span class="chip">4 Top 8</span>
+            <span class="chip">Masters</span>
+          </div>
+          <p>Polyvalent, privilégie les listes robustes avec de la disruption ciblée.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section--dim">
+      <div class="section__header">
+        <div>
+          <p class="eyebrow">Compositions</p>
+          <h2>Archétypes en vogue</h2>
+          <p class="subhead">Un panorama des decks les plus performants cette saison.</p>
+        </div>
+      </div>
+      <div class="grid grid--archetypes">
+        <div class="card">
+          <p class="card__title">Contrôle Azorius</p>
+          <p class="card__metric">Taux de victoire : 61%</p>
+          <p>Dominant contre midrange, favorise des plans de fin de partie sécurisés.</p>
+        </div>
+        <div class="card">
+          <p class="card__title">Rakdos Midrange</p>
+          <p class="card__metric">Taux de victoire : 58%</p>
+          <p>Courbe de mana solide, removal flexible et clock constante.</p>
+        </div>
+        <div class="card">
+          <p class="card__title">Mono-Blue Tempo</p>
+          <p class="card__metric">Taux de victoire : 55%</p>
+          <p>Idéal pour punir les sorties lentes et capitaliser sur les contres.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <p class="eyebrow">Magic Arena Saison 2025</p>
+      <p>Retrouvez vos joueurs favoris, comparez vos performances et préparez votre prochain match.</p>
+    </div>
+    <div class="footer__links">
+      <a href="saison.html">Saison</a>
+      <a href="match.html">Résultat</a>
+      <a href="#" id="footer-login">Connexion</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

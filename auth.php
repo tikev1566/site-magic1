@@ -26,10 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Database credentials (use environment variables in InfinityFree panel when possible)
-$host = getenv('DB_HOST') ?: 'sql###.epizy.com';
-$dbName = getenv('DB_NAME') ?: 'epiz_00000000_magic';
-$user = getenv('DB_USER') ?: 'epiz_00000000';
-$password = getenv('DB_PASS') ?: 'motdepasse';
+// Values below are pre-filled with the InfinityFree instance provided in the brief
+// (db: epiz_40386105_magic25 on sql301.infinityfree.com).
+$host = getenv('DB_HOST') ?: 'sql301.infinityfree.com';
+$dbName = getenv('DB_NAME') ?: 'epiz_40386105_magic25';
+$user = getenv('DB_USER') ?: 'epiz_40386105';
+$password = getenv('DB_PASS') ?: 'QegUqVZMfbxYGwq';
 $port = getenv('DB_PORT') ?: '3306';
 
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;

@@ -11,6 +11,8 @@
   --radius-lg: 24px;
   --radius: 14px;
   --border: rgba(255, 255, 255, 0.1);
+  --content-max: 1200px;
+  --content-padding: min(6vw, 64px);
   --gradient: radial-gradient(circle at 15% 20%, rgba(255, 147, 48, 0.18), transparent 30%),
     radial-gradient(circle at 75% 10%, rgba(52, 214, 255, 0.25), transparent 35%),
     radial-gradient(circle at 50% 90%, rgba(124, 242, 154, 0.16), transparent 40%),
@@ -77,12 +79,14 @@ main {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 110px min(6vw, 64px) 90px;
+  padding: 110px var(--content-padding) 90px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 48px;
   align-items: center;
   isolation: isolate;
+  width: min(var(--content-max), 100%);
+  margin: 0 auto;
 }
 
 .hero__glow {
@@ -182,10 +186,12 @@ main {
 }
 
 .section {
-  padding: 0 min(6vw, 64px);
+  padding: 0 var(--content-padding);
   display: flex;
   flex-direction: column;
   gap: 28px;
+  width: min(var(--content-max), 100%);
+  margin: 0 auto;
 }
 
 .section--dim {
@@ -200,7 +206,7 @@ main {
     linear-gradient(140deg, rgba(10, 14, 26, 0.95), rgba(14, 20, 36, 0.92));
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius-lg);
-  padding: 48px min(6vw, 64px);
+  padding: 48px var(--content-padding);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
@@ -455,7 +461,7 @@ main {
 }
 
 .footer {
-  padding: 48px min(6vw, 64px);
+  padding: 48px var(--content-padding);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -463,6 +469,9 @@ main {
   flex-wrap: wrap;
   background: rgba(255, 255, 255, 0.02);
   border-top: 1px solid var(--border);
+  width: min(var(--content-max), 100%);
+  margin: 0 auto 32px;
+  border-radius: var(--radius);
 }
 
 .footer__links {
@@ -635,10 +644,12 @@ main {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px min(6vw, 64px);
+  padding: 16px var(--content-padding);
   background: rgba(5, 7, 15, 0.85);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(10px);
+  width: min(var(--content-max), 100%);
+  margin: 0 auto;
 }
 
 .brand {

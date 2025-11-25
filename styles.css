@@ -625,3 +625,121 @@ main {
     display: none;
   }
 }
+
+/* Nouvelle navigation et pages dédiées */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px min(6vw, 64px);
+  background: rgba(5, 7, 15, 0.85);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.topbar__nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topbar__link {
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.topbar__link.is-active,
+.topbar__link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+}
+
+.hero--sub {
+  padding-top: 72px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.grid--players {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.player-card {
+  background: linear-gradient(145deg, rgba(16, 21, 40, 0.92), rgba(8, 12, 22, 0.95));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+  box-shadow: var(--shadow);
+}
+
+.player-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-card__header img {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+.player-card__stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.grid--archetypes {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.grid--tournament {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.match-form {
+  display: grid;
+  gap: 14px;
+}
+
+.match-form select,
+.match-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: #fff;
+}
+
+.table--compact .table__row {
+  grid-template-columns: 80px 2fr 120px 120px;
+}
+
+@media (max-width: 720px) {
+  .topbar {
+    position: static;
+  }
+}

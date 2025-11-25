@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Résultat du match - Magic Arena</title>
+  <link rel="preconnect" href="http://fonts.googleapis.com">
+  <link rel="preconnect" href="http://fonts.gstatic.com" crossorigin>
+  <link href="http://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="backdrop" class="backdrop hidden"></div>
+  <div id="auth-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="modal__header">
+      <h2 id="auth-title">Rejoignez la saison Magic Arena</h2>
+      <button class="icon-button" id="close-modal" aria-label="Fermer la fenêtre">×</button>
+    </div>
+    <p class="modal__subtitle">Créez un compte ou connectez-vous pour suivre vos tournois, classements et récompenses.</p>
+    <form id="auth-form" class="form">
+      <label class="form__field">
+        <span>Adresse e-mail</span>
+        <input type="email" id="email" name="email" required placeholder="planeswalker@arena.gg">
+      </label>
+      <label class="form__field">
+        <span>Mot de passe</span>
+        <input type="password" id="password" name="password" required minlength="6" placeholder="••••••••">
+      </label>
+      <div class="form__actions">
+        <button type="submit" class="btn btn--primary">Créer un compte</button>
+        <button type="button" id="sign-in" class="btn btn--ghost">Se connecter</button>
+      </div>
+      <p id="form-message" class="form__message" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">Magic Arena</div>
+    <nav class="topbar__nav" aria-label="Navigation principale">
+      <a href="index.html" class="topbar__link">Accueil</a>
+      <a href="joueurs.html" class="topbar__link">Joueurs</a>
+      <a href="saison.html" class="topbar__link">Saison & Tournois</a>
+      <a href="match.html" class="topbar__link is-active">Résultat du match</a>
+    </nav>
+    <button class="btn btn--ghost" id="nav-login">Connexion</button>
+  </header>
+
+  <header class="hero hero--sub">
+    <div class="hero__glow"></div>
+    <div class="hero__content">
+      <p class="eyebrow">Ronde en cours</p>
+      <h1>Enregistrer un résultat</h1>
+      <p class="lead">Sélectionnez vos deux joueurs, consignez le score et publiez le résultat pour mise à jour immédiate du classement.</p>
+      <div class="hero__actions">
+        <a href="saison.html" class="btn btn--ghost">Voir le tournoi</a>
+        <a href="joueurs.html" class="btn btn--ghost">Consulter les profils</a>
+      </div>
+    </div>
+    <div class="card hero__card">
+      <p class="card__title">Statut</p>
+      <p class="card__metric">Ronde 5 • Open Dominaria</p>
+      <ul class="card__list">
+        <li><span class="badge badge--emerald"></span>Résultats sync en 30s</li>
+        <li><span class="badge badge--amber"></span>Validation arbitre automatique</li>
+        <li><span class="badge badge--violet"></span>Notifications envoyées aux joueurs</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="section">
+      <div class="section__header">
+        <div>
+          <p class="eyebrow">Formulaire</p>
+          <h2>Résultat du match actuel</h2>
+          <p class="subhead">Deux menus déroulants pour sélectionner les joueurs, puis saisissez le score et publiez.</p>
+        </div>
+      </div>
+
+      <form id="match-form" class="card match-form">
+        <div class="form__field">
+          <label for="player-one">Joueur 1</label>
+          <select id="player-one" name="playerOne" required>
+            <option value="">Choisir un joueur</option>
+            <option>NovaStrider</option>
+            <option>AriaFlux</option>
+            <option>BriseSort</option>
+            <option>MidnightLotus</option>
+          </select>
+        </div>
+        <div class="form__field">
+          <label for="player-two">Joueur 2</label>
+          <select id="player-two" name="playerTwo" required>
+            <option value="">Choisir un joueur</option>
+            <option>NovaStrider</option>
+            <option>AriaFlux</option>
+            <option>BriseSort</option>
+            <option>MidnightLotus</option>
+          </select>
+        </div>
+        <div class="form__field">
+          <label for="score">Résultat</label>
+          <input id="score" name="score" type="text" placeholder="Ex : 2-1" required>
+        </div>
+        <div class="form__actions">
+          <button class="btn btn--ghost" type="reset">Réinitialiser</button>
+          <button class="btn btn--primary" type="submit">Publier le résultat</button>
+        </div>
+        <p id="match-message" class="form__message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="section section--dim">
+      <div class="section__header">
+        <div>
+          <p class="eyebrow">Historique rapide</p>
+          <h2>Derniers rapports</h2>
+          <p class="subhead">Vérifiez que le match a bien été enregistré.</p>
+        </div>
+      </div>
+      <div class="table table--compact">
+        <div class="table__row table__row--head">
+          <div>Ronde</div>
+          <div>Joueurs</div>
+          <div>Résultat</div>
+          <div>Horodatage</div>
+        </div>
+        <div class="table__row">
+          <div>5</div>
+          <div class="player">
+            <span>NovaStrider</span> vs <span>BriseSort</span>
+          </div>
+          <div><span class="pill pill--positive">2-1</span></div>
+          <div>14:02</div>
+        </div>
+        <div class="table__row">
+          <div>5</div>
+          <div class="player">
+            <span>AriaFlux</span> vs <span>MidnightLotus</span>
+          </div>
+          <div><span class="pill pill--positive">2-0</span></div>
+          <div>13:57</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <p class="eyebrow">Magic Arena Saison 2025</p>
+      <p>Renseignez vos scores, synchronisez vos données et restez dans le haut du tableau.</p>
+    </div>
+    <div class="footer__links">
+      <a href="saison.html">Tournoi</a>
+      <a href="joueurs.html">Joueurs</a>
+      <a href="#" id="footer-login">Connexion</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

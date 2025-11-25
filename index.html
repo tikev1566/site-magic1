@@ -34,6 +34,17 @@
     </form>
   </div>
 
+  <header class="topbar">
+    <div class="brand">Magic Arena</div>
+    <nav class="topbar__nav" aria-label="Navigation principale">
+      <a href="index.html" class="topbar__link is-active">Accueil</a>
+      <a href="joueurs.html" class="topbar__link">Joueurs</a>
+      <a href="saison.html" class="topbar__link">Saison & Tournois</a>
+      <a href="match.html" class="topbar__link">Résultat du match</a>
+    </nav>
+    <button class="btn btn--ghost" id="nav-login">Connexion</button>
+  </header>
+
   <header class="hero">
     <div class="hero__glow"></div>
     <div class="hero__content">
@@ -41,8 +52,8 @@
       <h1>Arpentez la nouvelle saison</h1>
       <p class="lead">Planifiez vos tournois, suivez votre classement et revivez vos moments clés au sein d'une expérience raffinée pour les joueurs passionnés.</p>
       <div class="hero__actions">
-        <a href="#tournois" class="btn btn--primary">Découvrir les tournois</a>
-        <a href="#classement" class="btn btn--ghost">Voir le classement</a>
+        <a href="saison.html" class="btn btn--primary">Découvrir les tournois</a>
+        <a href="joueurs.html" class="btn btn--ghost">Voir les joueurs</a>
       </div>
       <div class="pill">
         <span class="dot"></span>
@@ -139,7 +150,7 @@
           <h2>Tableau des points de saison</h2>
           <p class="subhead">Suivez votre progression ronde après ronde et comparez-vous aux meilleurs Arpenteurs.</p>
         </div>
-        <button class="btn btn--ghost" id="cta-login">Mettre à jour mon profil</button>
+        <a class="btn btn--ghost" href="joueurs.html">Mettre à jour mon profil</a>
       </div>
       <div class="table">
         <div class="table__row table__row--head">

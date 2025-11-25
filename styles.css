@@ -743,3 +743,30 @@ main {
     position: static;
   }
 }
+
+/* Administration */
+.admin-card {
+  gap: 18px;
+}
+
+.admin-gate,
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-form .form__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.admin-form textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.admin-panel .muted {
+  color: var(--muted);
+}

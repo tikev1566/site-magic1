@@ -12,6 +12,20 @@ const form = document.getElementById('auth-form');
 const signInButton = document.getElementById('sign-in');
 const formMessage = document.getElementById('form-message');
 
+const contentDefaults = {
+  heroTitle: 'Arpentez la nouvelle saison',
+  heroLead:
+    "Planifiez vos tournois, suivez votre classement et revivez vos moments clés au sein d'une expérience raffinée pour les joueurs passionnés.",
+  heroPill: 'Prochaine étape: Open Dominaria, 14 juin',
+  heroProgress: 42,
+  heroProgressMetric: '42% des tournois complétés',
+  heroDetailOne: '10/24 tournois joués',
+  heroDetailTwo: 'Classement moyen: Top 25',
+  heroDetailThree: '3 invitations aux Masters',
+};
+
+const ADMIN_PASSWORD = 'mage-secret';
+
 function toggleModal(show) {
   if (!authModal || !backdrop) return;
   if (show) {
@@ -110,9 +124,123 @@ function initMatchForm() {
   });
 }
 
+function loadCustomContent() {
+  const rawContent = localStorage.getItem('customContent');
+  let customContent = {};
+
+  try {
+    customContent = rawContent ? JSON.parse(rawContent) : {};
+  } catch (error) {
+    console.warn('Impossible de lire les contenus personnalisés :', error);
+  }
+
+  const content = { ...contentDefaults, ...customContent };
+
+  document.querySelectorAll('[data-content-key]').forEach((element) => {
+    const key = element.dataset.contentKey;
+    const value = content[key] ?? element.dataset.default;
+    if (typeof value !== 'undefined') {
+      element.textContent = value;
+    }
+  });
+
+  const progressBar = document.querySelector('[data-progress-key="heroProgress"]');
+  if (progressBar) {
+    const progressValue = Number(content.heroProgress || contentDefaults.heroProgress);
+    const clamped = Math.min(100, Math.max(0, progressValue));
+    progressBar.style.width = `${clamped}%`;
+  }
+}
+
+function initAdminPage() {
+  const accessForm = document.getElementById('admin-access');
+  const adminGate = document.getElementById('admin-gate');
+  const adminPanel = document.getElementById('admin-panel');
+  const adminMessage = document.getElementById('admin-message');
+  const accessMessage = document.getElementById('admin-access-message');
+  const resetButton = document.getElementById('reset-content');
+  const adminForm = document.getElementById('admin-form');
+
+  if (!adminForm || !accessForm || !adminGate || !adminPanel) {
+    return;
+  }
+
+  const populateForm = (values = {}) => {
+    const content = { ...contentDefaults, ...values };
+    Object.entries(content).forEach(([key, value]) => {
+      const input = adminForm.elements.namedItem(key);
+      if (input) {
+        input.value = value;
+      }
+    });
+  };
+
+  let saved = {};
+  try {
+    const rawContent = localStorage.getItem('customContent');
+    saved = rawContent ? JSON.parse(rawContent) : {};
+  } catch (error) {
+    console.warn('Impossible de charger les données enregistrées :', error);
+  }
+  populateForm(saved);
+
+  accessForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const password = event.target.password?.value ?? '';
+    if (password !== ADMIN_PASSWORD) {
+      if (accessMessage) {
+        accessMessage.textContent = 'Mot de passe incorrect.';
+        accessMessage.style.color = '#f2695c';
+      }
+      return;
+    }
+
+    adminGate.classList.add('hidden');
+    adminPanel.classList.remove('hidden');
+    if (accessMessage) accessMessage.textContent = '';
+  });
+
+  adminForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(adminForm);
+    const values = Object.fromEntries(formData.entries());
+
+    const progress = Number(values.heroProgress);
+    if (Number.isNaN(progress) || progress < 0 || progress > 100) {
+      if (adminMessage) {
+        adminMessage.textContent = 'La progression doit être comprise entre 0 et 100.';
+        adminMessage.style.color = '#f2695c';
+      }
+      return;
+    }
+
+    localStorage.setItem('customContent', JSON.stringify({
+      ...contentDefaults,
+      ...values,
+      heroProgress: progress,
+    }));
+
+    if (adminMessage) {
+      adminMessage.textContent = "Enregistré ! Rechargez la page d'accueil pour voir les changements.";
+      adminMessage.style.color = '#18d3a6';
+    }
+  });
+
+  resetButton?.addEventListener('click', () => {
+    localStorage.removeItem('customContent');
+    populateForm(contentDefaults);
+    if (adminMessage) {
+      adminMessage.textContent = 'Valeurs réinitialisées.';
+      adminMessage.style.color = '#18d3a6';
+    }
+  });
+}
+
 function initPage() {
+  loadCustomContent();
   initModal();
   initMatchForm();
+  initAdminPage();
 }
 
 document.addEventListener('DOMContentLoaded', initPage);

@@ -41,6 +41,7 @@
       <a href="joueurs.html" class="topbar__link">Joueurs</a>
       <a href="saison.html" class="topbar__link">Saison & Tournois</a>
       <a href="match.html" class="topbar__link">Résultat du match</a>
+      <a href="admin.html" class="topbar__link">Administration</a>
     </nav>
     <button class="btn btn--ghost" id="nav-login">Connexion</button>
   </header>
@@ -49,28 +50,28 @@
     <div class="hero__glow"></div>
     <div class="hero__content">
       <p class="eyebrow">Saison 2025 • Magic: The Gathering Arena</p>
-      <h1>Arpentez la nouvelle saison</h1>
-      <p class="lead">Planifiez vos tournois, suivez votre classement et revivez vos moments clés au sein d'une expérience raffinée pour les joueurs passionnés.</p>
+      <h1 data-content-key="heroTitle" data-default="Arpentez la nouvelle saison">Arpentez la nouvelle saison</h1>
+      <p class="lead" data-content-key="heroLead" data-default="Planifiez vos tournois, suivez votre classement et revivez vos moments clés au sein d'une expérience raffinée pour les joueurs passionnés.">Planifiez vos tournois, suivez votre classement et revivez vos moments clés au sein d'une expérience raffinée pour les joueurs passionnés.</p>
       <div class="hero__actions">
         <a href="saison.html" class="btn btn--primary">Découvrir les tournois</a>
         <a href="joueurs.html" class="btn btn--ghost">Voir les joueurs</a>
       </div>
       <div class="pill">
         <span class="dot"></span>
-        <span>Prochaine étape: Open Dominaria, 14 juin</span>
+        <span data-content-key="heroPill" data-default="Prochaine étape: Open Dominaria, 14 juin">Prochaine étape: Open Dominaria, 14 juin</span>
       </div>
     </div>
     <div class="hero__card">
       <div class="card">
         <p class="card__title">Statut de la saison</p>
         <div class="progress">
-          <div class="progress__bar" style="width: 42%"></div>
+          <div class="progress__bar" data-progress-key="heroProgress" style="width: 42%"></div>
         </div>
-        <p class="card__metric">42% des tournois complétés</p>
+        <p class="card__metric" data-content-key="heroProgressMetric" data-default="42% des tournois complétés">42% des tournois complétés</p>
         <ul class="card__list">
-          <li><span class="badge badge--emerald"></span>10/24 tournois joués</li>
-          <li><span class="badge badge--amber"></span>Classement moyen: Top 25</li>
-          <li><span class="badge badge--violet"></span>3 invitations aux Masters</li>
+          <li><span class="badge badge--emerald"></span><span data-content-key="heroDetailOne" data-default="10/24 tournois joués">10/24 tournois joués</span></li>
+          <li><span class="badge badge--amber"></span><span data-content-key="heroDetailTwo" data-default="Classement moyen: Top 25">Classement moyen: Top 25</span></li>
+          <li><span class="badge badge--violet"></span><span data-content-key="heroDetailThree" data-default="3 invitations aux Masters">3 invitations aux Masters</span></li>
         </ul>
       </div>
     </div>
